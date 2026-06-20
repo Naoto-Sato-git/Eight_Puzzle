@@ -6,6 +6,13 @@
 
 ## 実行画面
 ### 最良優先探索で解決
-[ai](./movie/solve_by_ai.mp4)
+
+
+https://github.com/user-attachments/assets/23dafee4-94ec-4cfa-a6c1-f3bfa1c62a3a
+
+
 ### 盤面リセット(Nキー) + マウスを使って人の手で解決
-[mouse](./movie/solve_use_mouse.mp4)
+
+
+
+
