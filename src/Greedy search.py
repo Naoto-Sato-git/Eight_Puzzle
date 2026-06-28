@@ -1,7 +1,24 @@
-# 深さ優先探索
 import pyxel, random
 
 goalstate = list(range(1,9)) + [0]
+
+# ヒューリスティック探索のスコア計算(ゴールまでの距離)
+def evalstat(path):
+    # gval = len(path)
+    stat = path[-1]
+    # 理想の位置にないパネルの総数
+    # hval = sum(1 for i in range(3*3) if stat[i] and stat[i] != i+1)
+    # マンハッタン距離の総和
+    hval = sum(mdist(i, stat[i]-1) if stat[i] else 0 for i in range(3*3))
+    return hval
+
+def sort_openL(openL):
+    newL = []
+    for path in openL:
+        ans = evalstat(path)
+        newL.append((ans, path))
+    newL.sort(key=lambda x:x[0])
+    return [hist for (_, hist) in newL]
 
 def nextmoves(stat):
     zeropos = stat.index(0)
@@ -18,13 +35,15 @@ def solver(board):
     print("Auto-solving...")
     openL = [ [board] ]
     doneL = [ ]
-    for i in range(1000):
-        path = openL.pop() # 深さ優先探索では、リストの末尾から取り出す
+    for i in range(10000):
+        if not openL: break
+        openL = sort_openL(openL)
+        path = openL.pop(0)
         stat = path[-1]
         if stat == goalstate:
-            print(f"Solution found({i}) in {len(path)-1} steps!")
-            print(path)
-            return path[1:]
+            print(f"Solution found({i}, ol:{len(openL)}, dl:{len(doneL)}){len(path)-1} steps!")
+            # print(path)
+            return [list(s) for s in path[1:]]
         doneL.append(stat)
         newstatL = nextmoves(stat)
         for newstat in newstatL:
@@ -56,10 +75,10 @@ class App:
         for _ in range(10):
             # self.board = list(range(9))
             # random.shuffle(self.board)
-            lower = list(range(3,9)) + [0]
-            random.shuffle(lower)
-            self.board = list(range(1,3)) + lower
-            # self.board = [1,2,3,4,5,6,0,7,8]
+            # lower = list(range(3,9)) + [0]
+            # random.shuffle(lower)
+            # self.board = list(range(1,3)) + lower
+            self.board = [1,2,8,3,0,7,6,4,5]
             inum = invnum(self.board)
             # print(inum, inum%2, self.board)
             if inum % 2 == 0:
@@ -75,7 +94,7 @@ class App:
         if pyxel.btnp(pyxel.KEY_N):
             self.new_game()
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
-            mx, my = pyxel.mouse_x, pyxel.mouse_y # クリックされた時点のマウス座標を取得
+            mx, my = pyxel.mouse_x, pyxel.mouse_y
             cx, cy = mx // self.tilesize, my // self.tilesize
             cpos = cy * self.gridsize + cx
 
