@@ -6,14 +6,13 @@
 
 ## 実行画面
 ### 最良優先探索で解決
-
-
 https://github.com/user-attachments/assets/23dafee4-94ec-4cfa-a6c1-f3bfa1c62a3a
-
 
 ### 盤面リセット(Nキー) + マウスを使って人の手で解決
 https://github.com/user-attachments/assets/0694592c-0983-44b6-83b6-7c8786d9d5d9
 
 ### ヒューリスティック欲張り探索
+https://github.com/user-attachments/assets/86023d54-3872-4189-9218-48b323e9b987
 
 ### A*探索
+https://github.com/user-attachments/assets/01e25fb2-09cd-467b-905e-8f6c3330cb1c
